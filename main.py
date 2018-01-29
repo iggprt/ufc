@@ -2,16 +2,16 @@
 import os
 from bs4 import BeautifulSoup
 import re
-import HTMLParser
-import Tkinter as tk
-import ttk
+import tkinter as tk
+from tkinter import ttk as ttk
+import matplotlib
 
 import matplotlib
 
-files = os.listdir('./page_sources/fighters_stats/')
+#files = os.listdir('./page_sources/fighters_stats/')
 #pages = [ BeautifulSoup( open('./htmls/'+file, 'r').read(),'html.parser') for file in files ]
 
-LARGE_FONT = ('Verdana', 8)
+LARGE_FONT = ('Verdana', 15)
 
 class UFC(tk.Tk):
 	
