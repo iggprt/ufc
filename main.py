@@ -7,6 +7,10 @@ from tkinter import ttk as ttk
 import matplotlib
 
 import matplotlib
+from matplotlib import style
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
+from matplotlib.figure import Figure
+#matplotlib.use('TkAgg')
 
 #files = os.listdir('./page_sources/fighters_stats/')
 #pages = [ BeautifulSoup( open('./htmls/'+file, 'r').read(),'html.parser') for file in files ]
@@ -28,7 +32,7 @@ class UFC(tk.Tk):
 		
 		self.frames = {}
 		
-		for F in (StartPage, PageOne, PageTwo):
+		for F in (StartPage, PageOne, PageTwo, PageThree):
 		
 			frame = F(container, self)
 			self.frames[F] = frame			
@@ -75,11 +79,41 @@ class PageTwo(tk.Frame):
 		label = tk.Label(self, text='page dos', font = LARGE_FONT)
 		label.pack(pady=10, padx=10)
 		
-		button1 = tk.Button(self, text = '>', command = lambda: controller.show_frame(StartPage))
+		button1 = tk.Button(self, text = '>', command = lambda: controller.show_frame(PageThree))
 		button1.pack(side='right')
 		
 		button2 = tk.Button(self, text = '<', command = lambda: controller.show_frame(PageOne))
 		button2.pack(side='left')
+
+class PageThree(tk.Frame):
+	
+	def __init__(self, parent, controller):
+		tk.Frame.__init__(self, parent)
+		label = tk.Label(self, text='page graph', font = LARGE_FONT)
+		label.pack(pady=10, padx=10)
+		
+		button1 = tk.Button(self, text = '>', command = lambda: controller.show_frame(StartPage))
+		button1.pack(side='right')
+		
+		button2 = tk.Button(self, text = '<', command = lambda: controller.show_frame(PageTwo))
+		button2.pack(side='left')
+
+		f = Figure(figsize = (5,5), dpi = 100)
+		a = f.add_subplot(111)
+		a.plot([1,2,3],[2,8,6])
+
+		canvas = FigureCanvasTkAgg(f, self)
+		canvas.show()
+		canvas.get_tk_widget().pack(side = tk.TOP, fill = tk.BOTH, expand = True)
+
+		toolbar = NavigationToolbar2TkAgg(canvas, self)
+		toolbar.update()
+		canvas._tkcanvas.pack(side = tk.TOP, fill = tk.BOTH, expand = True)
 		
 app = UFC()
-app.mainloop()
+while True:
+    try:
+        app.mainloop()
+        break
+    except UnicodeDecodeError:
+        pass
