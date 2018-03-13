@@ -62,7 +62,7 @@ class Crawler():
 
 		self.link = link
 		self.branch = branch
-		self.source = requests.get(self.dressed_link)
+		self.source = requests.get(self.dressed_link).text
 		self.soup = BeautifulSoup(self.source, 'lxml')
 		
 
@@ -77,7 +77,6 @@ class Crawler():
 		print (len(matches))
 
 	def build_link():
-
 		pass
 
 	def good_link(self, link):
